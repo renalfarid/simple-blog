@@ -1,5 +1,8 @@
 <script setup>
+  import HeaderBlog from '../../components/ui/HeaderBlog.vue'
+  import DefaultView from './View.vue'
 </script>
 <template>
-    <h1>Dashboard page</h1>
+  <HeaderBlog />
+  <DefaultView /> 
 </template>

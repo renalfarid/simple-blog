@@ -13,6 +13,17 @@ const routes = [
         ],
     },
     {
+      path: '/dashboard',
+      component: () => import('@/layouts/default/Dashboard.vue'),
+      children: [
+        {
+          path: '/dashboard',
+          name: 'Dashboard',
+          component: () => import('@/views/Home.vue'),
+        },
+      ],
+  },
+    {
         path: '/register',
         component: () => import('@/layouts/default/Default.vue'),
         children: [
