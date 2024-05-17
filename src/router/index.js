@@ -23,6 +23,17 @@ const routes = [
         },
       ],
   },
+  {
+    path: '/manage',
+    component: () => import('@/layouts/default/Dashboard.vue'),
+    children: [
+      {
+        path: '/manage',
+        name: 'Posts',
+        component: () => import('@/views/Manage.vue'),
+      },
+    ],
+},
     {
         path: '/register',
         component: () => import('@/layouts/default/Blank.vue'),
