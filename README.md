@@ -1,7 +1,17 @@
-# Vue 3 + Vite
+# Frontend Task
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Using Vue.js and Tailwind, create a frontend web application that consumes the
+RESTful API and allows users to perform the following actions:
+- [ ] Register and authenticate (login/logout).
+- [ ]Create, update, and delete blog posts.
+- [ ] Read and filter blog posts by status, author, and date.
+- [ ] Create, update, and delete comments on blog posts.
+- [ ] Like and dislike blog posts and comments.
 
-## Recommended IDE Setup
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+## How to Setup
+
+- Clone the repo
+- Setup enviroment
+- Install dependency
+- Run application
