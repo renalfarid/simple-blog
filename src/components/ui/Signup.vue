@@ -1,8 +1,8 @@
 <script setup>
-  import { ref } from 'vue';
-  import useApiRequest from '@/composable/useApiRequest';
+  import { ref } from 'vue'
+  import useApiAuth from '@/composable/useApiAuth'
 
-  const { state, signup } = useApiRequest();
+  const { state, signup } = useApiAuth()
 
   const password = ref("")
   const confirmPassword = ref("")

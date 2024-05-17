@@ -1,4 +1,40 @@
 <script setup>
+  import { ref } from 'vue'
+  import useApiAuth from '@/composable/useApiAuth'
+  import { useRouter } from 'vue-router'
+
+  const router = useRouter()
+  const form = ref({})
+  const errorMessage = ref("")
+  const isError = ref(false)
+
+  const userData = {
+    email: "",
+    password: ""
+  }
+
+  const { state, login } = useApiAuth()
+  let code = 200
+
+  const handleLogin = async () => {
+   userData.email = form.value.email
+   userData.password = form.value.password
+   await login(userData)
+
+   code = state.data.code
+
+   if(code !== 200) {
+     isError.value = true
+     errorMessage.value = state.data.message
+
+     setTimeout(() => {
+        isError.value = false
+      }, 3000)
+     return
+   }
+
+   router.push('/dashboard')
+  };
 </script>
 <template>
     <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -8,8 +44,16 @@
         <p class="mx-auto mt-4 max-w-md text-center text-gray-500">
           Please login to manage your blog
         </p>
+
+        <div v-if="isError" role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+            <strong class="block font-medium text-red-800"> Something went wrong </strong>
+        
+            <p class="mt-2 text-sm text-red-700">
+            {{ errorMessage }}
+            </p>
+        </div>
     
-        <form action="#" class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+        <form @submit.prevent="handleLogin()" class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
           <p class="text-center text-lg font-medium">Sign in to your account</p>
     
           <div>
@@ -17,6 +61,7 @@
     
             <div class="relative">
               <input
+                v-model="form.email"
                 type="email"
                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter email"
@@ -46,6 +91,7 @@
     
             <div class="relative">
               <input
+                v-model="form.password"
                 type="password"
                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
