@@ -12,6 +12,28 @@ const routes = [
           },
         ],
     },
+    {
+        path: '/register',
+        component: () => import('@/layouts/default/Default.vue'),
+        children: [
+          {
+            path: '/register',
+            name: 'Register',
+            component: () => import('@/views/Register.vue'),
+          },
+        ],
+    },
+    {
+      path: '/login',
+      component: () => import('@/layouts/default/Default.vue'),
+      children: [
+        {
+          path: '/login',
+          name: 'Login',
+          component: () => import('@/views/Login.vue'),
+        },
+      ],
+  },
 ]
 
 const router = createRouter({
