@@ -25,7 +25,7 @@ const routes = [
   },
     {
         path: '/register',
-        component: () => import('@/layouts/default/Default.vue'),
+        component: () => import('@/layouts/default/Blank.vue'),
         children: [
           {
             path: '/register',
@@ -36,7 +36,7 @@ const routes = [
     },
     {
       path: '/login',
-      component: () => import('@/layouts/default/Default.vue'),
+      component: () => import('@/layouts/default/Blank.vue'),
       children: [
         {
           path: '/login',
