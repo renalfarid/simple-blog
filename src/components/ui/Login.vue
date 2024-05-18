@@ -1,9 +1,11 @@
 <script setup>
   import { ref } from 'vue'
   import useApiAuth from '@/composable/useApiAuth'
+  import useLocalStorage from '@/composable/useLocalStorage'
   import { useRouter } from 'vue-router'
 
   const router = useRouter()
+  const { saveLocalStorage } = useLocalStorage()
   const form = ref({})
   const errorMessage = ref("")
   const isError = ref(false)
@@ -15,6 +17,8 @@
 
   const { state, login } = useApiAuth()
   let code = 200
+  let loginData = null
+  let token = ""
 
   const handleLogin = async () => {
    userData.email = form.value.email
@@ -32,6 +36,11 @@
       }, 3000)
      return
    }
+   loginData = state.data
+   token = loginData.results.token
+   console.log("state login: ", loginData)
+   console.log("token: ", token)
+   saveLocalStorage("session", token)
 
    router.push('/dashboard')
   };
