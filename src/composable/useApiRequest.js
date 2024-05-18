@@ -6,9 +6,10 @@ const { getLocalStorage } = useLocalStorage()
 const BASE_API_URL = import.meta.env.VITE_BASE_API_URL || 'https://blog.test/api'
 
 let dataToken = getLocalStorage("session")
-    if (dataToken.startsWith('"') && dataToken.endsWith('"')) {
-        dataToken = dataToken.slice(1, -1)
-    }
+
+if (dataToken?.startsWith('"') && dataToken?.endsWith('"')) {
+    dataToken = dataToken.slice(1, -1)
+}
 
 export default function useApiRequest() {
   const state = reactive({
@@ -36,12 +37,35 @@ export default function useApiRequest() {
   const fetchUserPosts = async () => {
     state.loading = true
     try {
+      const response = await fetch(`${BASE_API_URL}/user/posts`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${dataToken}`,
+            'Content-Type': 'application/json' 
+        }
+        })
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
+  const addUserPosts = async (payload) => {
+    state.loading = true
+    try {
         const response = await fetch(`${BASE_API_URL}/user/posts`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
               'Authorization': `Bearer ${dataToken}`,
               'Content-Type': 'application/json' 
-            }
+            },
+            body: JSON.stringify(payload)
           })
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`)
@@ -102,6 +126,7 @@ export default function useApiRequest() {
     state,
     fetchPosts,
     fetchUserPosts,
+    addUserPosts,
     addLikePost,
     addDislikePost
   }
