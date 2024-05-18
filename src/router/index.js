@@ -23,6 +23,17 @@ const routes = [
         },
       ],
   },
+  {
+    path: '/dashboard/blog/:slug',
+    component: () => import('@/layouts/default/Dashboard.vue'),
+    children: [
+      {
+        path: '/dashboard/blog/:slug',
+        name: 'DashboardBlogDetail',
+        component: () => import('@/views/DashboardBlogDetail.vue'),
+      },
+    ],
+},
     {
       path: '/dashboard',
       component: () => import('@/layouts/default/Dashboard.vue'),
@@ -30,7 +41,7 @@ const routes = [
         {
           path: '/dashboard',
           name: 'Dashboard',
-          component: () => import('@/views/Home.vue'),
+          component: () => import('@/views/Dashboard.vue'),
           meta: {
             requiresAuth: true 
           }
@@ -38,11 +49,11 @@ const routes = [
       ],
   },
   {
-    path: '/manage',
+    path: '/dashboard/manage',
     component: () => import('@/layouts/default/Dashboard.vue'),
     children: [
       {
-        path: '/manage',
+        path: '/dashboard/manage',
         name: 'Posts',
         component: () => import('@/views/Manage.vue'),
         meta: {
@@ -52,11 +63,11 @@ const routes = [
     ],
   },
   {
-    path: '/manage/create-post',
+    path: '/dashboard/manage/create-post',
     component: () => import('@/layouts/default/Dashboard.vue'),
     children: [
       {
-        path: '/manage/create-post',
+        path: '/dashboard/manage/create-post',
         name: 'CreatePost',
         component: () => import('@/views/CreatePost.vue'),
         meta: {

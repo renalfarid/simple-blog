@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import useApiRequest from '../composable/useApiRequest';
 
-const { state, fetchUserPosts, addLikePost, addDislikePost, deleteUserPost } = useApiRequest();
+const { state, fetchUserPosts,deleteUserPost } = useApiRequest();
 
 console.log("state: ", state);
 
@@ -11,12 +11,6 @@ const data = ref([]);
 const fetchBlogPost = async () => {
   await fetchUserPosts();
   data.value = state.data.results;
-};
-
-
-const startEditPost = (id) => {
-  // Trigger modal or form to edit post
-  console.log("Editing post id: ", id);
 };
 
 const deletePostById = async (id) => {
@@ -28,6 +22,10 @@ const deletePostById = async (id) => {
 onMounted(async () => {
   await fetchBlogPost();
 });
+
+watch(() => data.value, (newVal) => {
+  data.value = newVal
+})
 </script>
 
 <template>
@@ -52,11 +50,11 @@ onMounted(async () => {
 
       <!-- Like, Comment, Edit and Delete Icons -->
       <div class="mt-4 ml-10 flex items-center space-x-4">
-        <a :href="`/manage/update-post/${item.id}`" class="flex items-center text-gray-500 hover:text-gray-700">
+        <a :href="`/manage/update-post/${item.post_id}`" class="flex items-center text-gray-500 hover:text-gray-700">
           <i class="fas fa-edit"></i>
           <span class="ml-1">Edit</span>
         </a>
-        <button @click="deletePostById(item.id)" class="flex items-center text-gray-500 hover:text-gray-700">
+        <button @click="deletePostById(item.post_id)" class="flex items-center text-gray-500 hover:text-gray-700">
           <i class="fas fa-trash"></i>
           <span class="ml-1">Delete</span>
         </button>

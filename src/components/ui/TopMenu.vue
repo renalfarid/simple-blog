@@ -7,7 +7,7 @@
           <div class="md:flex md:items-center md:gap-12">
             <a class="block text-teal-600" href="/">
               <span class="sr-only">Home</span>
-              <img src="/blog-logo.png" width="150" height="150" />
+              <img src="/blog-logo.png" width="80" height="80" />
             </a>
           </div>
     
