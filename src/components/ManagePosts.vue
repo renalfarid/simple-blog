@@ -14,6 +14,7 @@ const fetchBlogPost = async () => {
 
 const likePost = async (id) => {
   await addLikePost(id)
+  await fetchBlogPost()
   console.log("id like: ", id)
 }
 
