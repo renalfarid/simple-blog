@@ -9,6 +9,7 @@
   const form = ref({})
   const errorMessage = ref("")
   const isError = ref(false)
+  const showPassword = ref(false)  
 
   const userData = {
     email: "",
@@ -41,8 +42,6 @@
    token = loginData.results.token
    userLogin = loginData.results
 
-   console.log("state login: ", userLogin)
-   console.log("token: ", token)
    saveLocalStorage("session", token)
    saveLocalStorage("user", userLogin)
 
@@ -105,12 +104,12 @@
             <div class="relative">
               <input
                 v-model="form.password"
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
               />
     
-              <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
+              <span @click="showPassword = !showPassword" class="absolute inset-y-0 end-0 grid place-content-center px-4 hover:cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="size-4 text-gray-400"
