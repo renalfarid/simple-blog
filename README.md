@@ -3,10 +3,11 @@
 Using Vue.js and Tailwind, create a frontend web application that consumes the
 RESTful API and allows users to perform the following actions:
 - [x] Register and authenticate (login/logout).
-- [ ] Create, update, and delete blog posts.
+- [x] Create, update, and delete blog posts.
 - [ ] Read and filter blog posts by status, author, and date.
-- [ ] Create, update, and delete comments on blog posts.
-- [ ] Like and dislike blog posts and comments.
+- [x] Create, update, and delete comments on blog posts.
+- [x] Like and dislike blog posts
+- [ ] Like and dislike blog comment
 
 Notes : 
 - The frontend should be responsive and user-friendly, with appropriate form
