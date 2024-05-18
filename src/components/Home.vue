@@ -1,9 +1,8 @@
 <script setup>
 import {onMounted, ref} from "vue"
 import useApiRequest from '../composable/useApiRequest'
-const { state, fetchPosts, addLikePost } = useApiRequest();
 
-console.log("state: ", state);
+const { state, fetchPosts, addLikePost, addDislikePost } = useApiRequest()
 
 const data = ref([]); 
 
@@ -15,8 +14,12 @@ const fetchBlogPost = async () => {
 const likePost = async (id) => {
   await addLikePost(id)
   await fetchBlogPost()
-  console.log("id like: ", id)
 }
+
+const dislikePost = async (id) => {
+  await addDislikePost(id);
+  await fetchBlogPost(); // Refresh posts to update dislike status
+};
 
  onMounted(async() => {
   await fetchBlogPost();
@@ -51,7 +54,7 @@ const likePost = async (id) => {
             <i class="fas fa-thumbs-up"></i>
             <span class="ml-1">Like</span>
           </button>
-          <button 
+          <button  @click="dislikePost(item.id)" 
             :class="{'text-red-500': item.is_dislike, 'text-gray-500 hover:text-gray-700': !item.is_dislike}"
             class="flex items-center text-gray-500 hover:text-gray-700">
             <i class="fas fa-thumbs-down"></i>
