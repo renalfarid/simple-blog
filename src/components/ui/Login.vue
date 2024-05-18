@@ -19,6 +19,7 @@
   let code = 200
   let loginData = null
   let token = ""
+  let userLogin = null
 
   const handleLogin = async () => {
    userData.email = form.value.email
@@ -38,9 +39,12 @@
    }
    loginData = state.data
    token = loginData.results.token
-   console.log("state login: ", loginData)
+   userLogin = loginData.results
+
+   console.log("state login: ", userLogin)
    console.log("token: ", token)
    saveLocalStorage("session", token)
+   saveLocalStorage("user", userLogin)
 
    router.push('/dashboard')
   };

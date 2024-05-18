@@ -7,6 +7,7 @@
 
  const logout = () => {
     clearLocalStorage('session')
+    clearLocalStorage('user')
     router.push('/')
  }
 </script>

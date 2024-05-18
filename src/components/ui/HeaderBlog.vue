@@ -1,11 +1,30 @@
 <script setup>
+  import { ref, onMounted } from "vue"
+  import useLocalStorage from "../../composable/useLocalStorage"
+
+  const { getLocalStorage } = useLocalStorage()
+  const userLoggedIn = getLocalStorage('user')
+  const userName = ref('')
+  let user = {}
+
+  const fetchUserLogin = () => {
+     user = JSON.parse(userLoggedIn)
+     userName.value = user.name
+
+  }
+
+  onMounted(() => {
+    fetchUserLogin()
+  })
+
+
 </script>
 <template>
     <header>
       <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div class="sm:flex sm:items-center sm:justify-between">
           <div class="text-center sm:text-left">
-            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Welcome Back, Barry!</h1>
+            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Welcome Back, {{ userName }} !</h1>
     
             <p class="mt-1.5 text-sm text-gray-500">Let's write a new blog post! 🎉</p>
           </div>
