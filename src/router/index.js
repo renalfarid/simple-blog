@@ -36,28 +36,39 @@ const routes = [
         component: () => import('@/views/Manage.vue'),
       },
     ],
-},
-    {
-        path: '/register',
-        component: () => import('@/layouts/default/Blank.vue'),
-        children: [
-          {
-            path: '/register',
-            name: 'Register',
-            component: () => import('@/views/Register.vue'),
-          },
-        ],
-    },
-    {
-      path: '/login',
+  },
+  {
+    path: '/manage/create-post',
+    component: () => import('@/layouts/default/Dashboard.vue'),
+    children: [
+      {
+        path: '/manage/create-post',
+        name: 'CreatePost',
+        component: () => import('@/views/CreatePost.vue'),
+      },
+    ],
+  },
+  {
+      path: '/register',
       component: () => import('@/layouts/default/Blank.vue'),
       children: [
         {
-          path: '/login',
-          name: 'Login',
-          component: () => import('@/views/Login.vue'),
+          path: '/register',
+          name: 'Register',
+          component: () => import('@/views/Register.vue'),
         },
       ],
+  },
+  {
+    path: '/login',
+    component: () => import('@/layouts/default/Blank.vue'),
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/views/Login.vue'),
+      },
+    ],
   },
 ]
 

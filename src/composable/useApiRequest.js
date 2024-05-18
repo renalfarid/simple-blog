@@ -56,7 +56,7 @@ export default function useApiRequest() {
     }
   }
   
-  const addUserPosts = async (payload) => {
+  const addUserPost = async (payload) => {
     state.loading = true
     try {
         const response = await fetch(`${BASE_API_URL}/user/posts`, {
@@ -68,6 +68,7 @@ export default function useApiRequest() {
             body: JSON.stringify(payload)
           })
       if (!response.ok) {
+        state.data = await response.json()
         throw new Error(`Error: ${response.statusText}`)
       }
       const data = await response.json()
@@ -148,7 +149,7 @@ export default function useApiRequest() {
     state,
     fetchPosts,
     fetchUserPosts,
-    addUserPosts,
+    addUserPost,
     addLikePost,
     addDislikePost,
     deleteUserPost

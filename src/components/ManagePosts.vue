@@ -13,16 +13,6 @@ const fetchBlogPost = async () => {
   data.value = state.data.results;
 };
 
-const likePost = async (id) => {
-  await addLikePost(id);
-  await fetchBlogPost();
-  console.log("id like: ", id);
-};
-
-const dislikePost = async (id) => {
-  await addDislikePost(id);
-  await fetchBlogPost(); // Refresh posts to update dislike status
-};
 
 const startEditPost = (id) => {
   // Trigger modal or form to edit post
