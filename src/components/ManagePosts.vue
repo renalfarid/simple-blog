@@ -1,14 +1,14 @@
 <script setup>
 import {onMounted, ref} from "vue"
 import useApiRequest from '../composable/useApiRequest'
-const { state, fetchPosts } = useApiRequest();
+const { state, fetchUserPosts } = useApiRequest();
 
 console.log("state: ", state);
 
 const data = ref([]); 
 
 const fetchBlogPost = async () => {
-  await fetchPosts();
+  await fetchUserPosts();
   data.value = state.data.results;
 }
 

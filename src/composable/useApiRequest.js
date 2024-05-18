@@ -1,4 +1,7 @@
-import { ref, reactive } from 'vue';
+import { ref, reactive } from 'vue'
+import useLocalStorage from './useLocalStorage'
+
+const { getLocalStorage } = useLocalStorage()
 
 const BASE_API_URL = import.meta.env.VITE_BASE_API_URL || 'https://blog.test/api';
 
@@ -26,9 +29,20 @@ export default function useApiRequest() {
   };
 
   const fetchUserPosts = async () => {
-    state.loading = true;
+    state.loading = true
+    let dataToken = getLocalStorage("session")
+    if (dataToken.startsWith('"') && dataToken.endsWith('"')) {
+        dataToken = dataToken.slice(1, -1);
+    }
+    console.log(dataToken)
     try {
-      const response = await fetch(`${BASE_API_URL}/user/posts`);
+        const response = await fetch(`${BASE_API_URL}/user/posts`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${dataToken}`,
+              'Content-Type': 'application/json' 
+            }
+          });
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
