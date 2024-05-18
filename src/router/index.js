@@ -77,7 +77,7 @@ const routes = [
     ],
   },
   {
-    path: '/manage/update-post/:id',
+    path: '/dashboard/manage/update-post/:id',
     component: () => import('@/layouts/default/Dashboard.vue'),
     children: [
       {

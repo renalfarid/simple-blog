@@ -32,7 +32,7 @@ const createUserPost = async () => {
     errorMessage.value = error
     return
   }
-  router.push('/manage')
+  router.push('/dashboard/manage')
 }
 
 onMounted(async () => {
