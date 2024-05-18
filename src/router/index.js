@@ -66,6 +66,20 @@ const routes = [
     ],
   },
   {
+    path: '/manage/update-post/:id',
+    component: () => import('@/layouts/default/Dashboard.vue'),
+    children: [
+      {
+        path: '',
+        name: 'UpdatePost',
+        component: () => import('@/views/CreatePost.vue'),
+        meta: {
+          requiresAuth: true 
+        }
+      },
+    ],
+  },
+  {
       path: '/register',
       component: () => import('@/layouts/default/Blank.vue'),
       children: [

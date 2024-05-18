@@ -52,10 +52,10 @@ onMounted(async () => {
 
       <!-- Like, Comment, Edit and Delete Icons -->
       <div class="mt-4 ml-10 flex items-center space-x-4">
-        <button class="flex items-center text-gray-500 hover:text-gray-700">
+        <a :href="`/manage/update-post/${item.id}`" class="flex items-center text-gray-500 hover:text-gray-700">
           <i class="fas fa-edit"></i>
           <span class="ml-1">Edit</span>
-        </button>
+        </a>
         <button @click="deletePostById(item.id)" class="flex items-center text-gray-500 hover:text-gray-700">
           <i class="fas fa-trash"></i>
           <span class="ml-1">Delete</span>

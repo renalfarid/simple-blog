@@ -52,6 +52,28 @@ export default function useApiRequest() {
     }
   }
 
+  const fetchUserPost = async (post_id) => {
+    state.loading = true
+    try {
+      const response = await fetch(`${BASE_API_URL}/posts?post_id=${post_id}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${dataToken}`,
+            'Content-Type': 'application/json' 
+        }
+        })
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
   const fetchUserPosts = async () => {
     state.loading = true
     try {
@@ -79,6 +101,30 @@ export default function useApiRequest() {
     try {
         const response = await fetch(`${BASE_API_URL}/user/posts`, {
             method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${dataToken}`,
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(payload)
+          })
+      if (!response.ok) {
+        state.data = await response.json()
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
+  const updateUserPost = async (id, payload) => {
+    state.loading = true
+    try {
+        const response = await fetch(`${BASE_API_URL}/user/posts/${id}`, {
+            method: 'PUT',
             headers: {
               'Authorization': `Bearer ${dataToken}`,
               'Content-Type': 'application/json' 
@@ -209,11 +255,13 @@ export default function useApiRequest() {
     fetchPosts,
     fetchSlugPost,
     fetchUserPosts,
+    fetchUserPost,
     addUserPost,
     addLikePost,
     addDislikePost,
     deleteUserPost,
     fetchPostComment,
-    addPostComment
+    addPostComment,
+    updateUserPost
   }
 }
