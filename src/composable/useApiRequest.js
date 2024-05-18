@@ -76,11 +76,33 @@ export default function useApiRequest() {
     }
   }
 
+  const addDislikePost = async (id) => {
+    try {
+        const response = await fetch(`${BASE_API_URL}/user/dislike/posts/${id}`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${dataToken}`,
+              'Content-Type': 'application/json' 
+            }
+          })
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
 
   return {
     state,
     fetchPosts,
     fetchUserPosts,
-    addLikePost
+    addLikePost,
+    addDislikePost
   }
 }

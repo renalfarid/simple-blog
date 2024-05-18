@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue"
 import useApiRequest from '../composable/useApiRequest'
-const { state, fetchPosts } = useApiRequest();
+const { state, fetchPosts, addLikePost } = useApiRequest();
 
 console.log("state: ", state);
 
@@ -10,6 +10,12 @@ const data = ref([]);
 const fetchBlogPost = async () => {
   await fetchPosts();
   data.value = state.data.results;
+}
+
+const likePost = async (id) => {
+  await addLikePost(id)
+  await fetchBlogPost()
+  console.log("id like: ", id)
 }
 
  onMounted(async() => {
@@ -37,6 +43,25 @@ const fetchBlogPost = async () => {
           </span>
         </div>
       </div>
+      <!-- Like and Comment Icons -->
+      <div class="mt-4 ml-10 flex items-center space-x-4">
+          <button @click="likePost(item.id)"
+          :class="{'text-red-500': item.is_like, 'text-gray-500 hover:text-gray-700': !item.is_like}"  
+           class="flex items-center text-gray-500 hover:text-gray-700">
+            <i class="fas fa-thumbs-up"></i>
+            <span class="ml-1">Like</span>
+          </button>
+          <button 
+            :class="{'text-red-500': item.is_dislike, 'text-gray-500 hover:text-gray-700': !item.is_dislike}"
+            class="flex items-center text-gray-500 hover:text-gray-700">
+            <i class="fas fa-thumbs-down"></i>
+            <span class="ml-1">Dislike</span>
+          </button>
+          <button class="flex items-center text-gray-500 hover:text-gray-700">
+            <i class="fas fa-comment"></i>
+            <span class="ml-1">Comment</span>
+          </button>
+        </div>
   </article>
   </div>
   
