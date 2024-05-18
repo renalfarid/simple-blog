@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import useApiRequest from '../composable/useApiRequest';
 
-const { state, fetchUserPosts, addLikePost, addDislikePost, editPost, deletePost } = useApiRequest();
+const { state, fetchUserPosts, addLikePost, addDislikePost, deleteUserPost } = useApiRequest();
 
 console.log("state: ", state);
 
@@ -30,7 +30,7 @@ const startEditPost = (id) => {
 };
 
 const deletePostById = async (id) => {
-  await deletePost(id);
+  await deleteUserPost(id);
   await fetchBlogPost();
   console.log("Deleted post id: ", id);
 };
@@ -66,7 +66,7 @@ onMounted(async () => {
           <i class="fas fa-edit"></i>
           <span class="ml-1">Edit</span>
         </button>
-        <button class="flex items-center text-gray-500 hover:text-gray-700">
+        <button @click="deletePostById(item.id)" class="flex items-center text-gray-500 hover:text-gray-700">
           <i class="fas fa-trash"></i>
           <span class="ml-1">Delete</span>
         </button>

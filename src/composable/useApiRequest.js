@@ -55,7 +55,7 @@ export default function useApiRequest() {
       state.loading = false
     }
   }
-
+  
   const addUserPosts = async (payload) => {
     state.loading = true
     try {
@@ -66,6 +66,28 @@ export default function useApiRequest() {
               'Content-Type': 'application/json' 
             },
             body: JSON.stringify(payload)
+          })
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
+  const deleteUserPost = async ($id) => {
+    state.loading = true
+    try {
+        const response = await fetch(`${BASE_API_URL}/user/posts/${$id}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${dataToken}`,
+              'Content-Type': 'application/json' 
+            },
           })
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`)
@@ -128,6 +150,7 @@ export default function useApiRequest() {
     fetchUserPosts,
     addUserPosts,
     addLikePost,
-    addDislikePost
+    addDislikePost,
+    deleteUserPost
   }
 }
