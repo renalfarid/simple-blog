@@ -20,6 +20,9 @@ const routes = [
           path: '/dashboard',
           name: 'Dashboard',
           component: () => import('@/views/Home.vue'),
+          meta: {
+            requiresAuth: true // Add meta field to indicate protected route
+          }
         },
       ],
   },
@@ -62,5 +65,18 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
   })
+
+  router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth) {
+      const token = localStorage.getItem('session');
+      if (token) {
+        next();
+      } else {
+        next('/login');
+      }
+    } else {
+      next();
+    }
+  });
 
   export default router
