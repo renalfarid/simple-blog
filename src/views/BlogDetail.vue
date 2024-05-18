@@ -45,7 +45,7 @@ onMounted(() => {
        <span>Add a comment</span>
       </button>
     </div>
-    <Comment :is_open="show"/>
+    <Comment :is_open="show" :id="post.id" @close="getPosts()"/>
     <div class="mt-10">
         <div class="antialiased mx-auto max-w-screen-sm">
             <div class="space-y-4">

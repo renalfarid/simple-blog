@@ -60,6 +60,7 @@ const dislikePost = async (id) => {
             <i class="fas fa-thumbs-down"></i>
             <span class="ml-1">Dislike</span>
           </button>
+          <span>Comments : {{ item.comment_count }}</span>
         </div>
   </article>
   </div>

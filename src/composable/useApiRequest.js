@@ -167,6 +167,8 @@ export default function useApiRequest() {
     try {
       const response = await fetch(`${BASE_API_URL}/posts/comments/${id}`)
       if (!response.ok) {
+        console.log("response comment: ", response.json())
+        state.data = await response.json()
         throw new Error(`Error: ${response.statusText}`)
       }
       const data = await response.json()
@@ -178,6 +180,30 @@ export default function useApiRequest() {
     }
   }
 
+  const addPostComment = async (id, payload) => {
+    try {
+        const response = await fetch(`${BASE_API_URL}/user/comments/${id}`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${dataToken}`,
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(payload)
+
+          })
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
+
   return {
     state,
     fetchPosts,
@@ -187,6 +213,7 @@ export default function useApiRequest() {
     addLikePost,
     addDislikePost,
     deleteUserPost,
-    fetchPostComment
+    fetchPostComment,
+    addPostComment
   }
 }
