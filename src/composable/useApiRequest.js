@@ -18,10 +18,28 @@ export default function useApiRequest() {
     loading: false,
   })
 
+  // /posts?slug=
+
   const fetchPosts = async () => {
     state.loading = true
     try {
       const response = await fetch(`${BASE_API_URL}/posts`)
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
+  const fetchSlugPost = async (slug) => {
+    state.loading = true
+    try {
+      const response = await fetch(`${BASE_API_URL}/posts?slug=${slug}`)
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`)
       }
@@ -144,14 +162,31 @@ export default function useApiRequest() {
     }
   }
 
+  const fetchPostComment = async (id) => {
+    state.loading = true
+    try {
+      const response = await fetch(`${BASE_API_URL}/posts/comments/${id}`)
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
 
   return {
     state,
     fetchPosts,
+    fetchSlugPost,
     fetchUserPosts,
     addUserPost,
     addLikePost,
     addDislikePost,
-    deleteUserPost
+    deleteUserPost,
+    fetchPostComment
   }
 }

@@ -32,7 +32,7 @@ const dislikePost = async (id) => {
       <div class="rounded-[10px] bg-white p-4 !pt-20 sm:p-6">
         <time datetime="2022-10-10" class="block text-xs text-gray-500"> {{ item.published_date }} </time>
     
-        <a href="#">
+        <a :href="`/blog/${item.slug}`">
           <h3 class="mt-5 text-lg font-medium text-gray-900">
             {{ item.title }}
           </h3>
@@ -59,10 +59,6 @@ const dislikePost = async (id) => {
             class="flex items-center text-gray-500 hover:text-gray-700">
             <i class="fas fa-thumbs-down"></i>
             <span class="ml-1">Dislike</span>
-          </button>
-          <button class="flex items-center text-gray-500 hover:text-gray-700">
-            <i class="fas fa-comment"></i>
-            <span class="ml-1">Comment</span>
           </button>
         </div>
   </article>

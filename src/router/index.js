@@ -13,6 +13,17 @@ const routes = [
         ],
     },
     {
+      path: '/blog/:slug',
+      component: () => import('@/layouts/default/Default.vue'),
+      children: [
+        {
+          path: '/blog/:slug',
+          name: 'BlogDetail',
+          component: () => import('@/views/BlogDetail.vue'),
+        },
+      ],
+  },
+    {
       path: '/dashboard',
       component: () => import('@/layouts/default/Dashboard.vue'),
       children: [
@@ -21,7 +32,7 @@ const routes = [
           name: 'Dashboard',
           component: () => import('@/views/Home.vue'),
           meta: {
-            requiresAuth: true // Add meta field to indicate protected route
+            requiresAuth: true 
           }
         },
       ],
@@ -34,6 +45,9 @@ const routes = [
         path: '/manage',
         name: 'Posts',
         component: () => import('@/views/Manage.vue'),
+        meta: {
+          requiresAuth: true 
+        }
       },
     ],
   },
@@ -45,6 +59,9 @@ const routes = [
         path: '/manage/create-post',
         name: 'CreatePost',
         component: () => import('@/views/CreatePost.vue'),
+        meta: {
+          requiresAuth: true 
+        }
       },
     ],
   },
