@@ -1,5 +1,14 @@
 <script setup>
-//
+ import useLocalStorage from '../../composable/useLocalStorage'
+ import { useRouter } from 'vue-router'
+
+ const { clearLocalStorage } = useLocalStorage()
+ const router = useRouter()
+
+ const logout = () => {
+    clearLocalStorage('session')
+    router.push('/')
+ }
 </script>
 <template>
     <div class="mt-10 ml-10">
@@ -30,7 +39,8 @@
           </a>
 
           <a
-            href="/login"
+            href="#"
+            @click.prevent="logout()"
             class="shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700"
           >
             Logout
