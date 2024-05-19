@@ -53,9 +53,9 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="m-10 flex gap-8">
+    <div class="m-4">
       <!-- Status Filter -->
-      <div class="relative">
+      <div class="mb-4">
         <details class="group [&_summary::-webkit-details-marker]:hidden">
           <summary class="flex cursor-pointer items-center gap-2 border-b border-gray-400 pb-1 text-gray-900 transition hover:border-gray-600">
             <span class="text-sm font-medium">Status</span>
@@ -66,8 +66,8 @@ onMounted(async () => {
             </span>
           </summary>
           <div class="z-50 group-open:absolute group-open:start-0 group-open:top-auto group-open:mt-2">
-            <div class="w-96 rounded border border-gray-200 bg-white">
-              <ul class="space-y-1 border-t border-gray-200 p-4">
+            <div class="w-full rounded border border-gray-200 bg-white">
+              <ul class="space-y-1 border-t border-gray-200 p-2">
                 <li v-for="status in statusOptions" :key="status.status">
                   <label :for="`filter-status-${status.status}`" class="inline-flex items-center gap-2">
                     <input
@@ -87,7 +87,7 @@ onMounted(async () => {
       </div>
   
       <!-- Author Filter -->
-      <div class="relative">
+      <div class="mb-4">
         <details class="group [&_summary::-webkit-details-marker]:hidden">
           <summary class="flex cursor-pointer items-center gap-2 border-b border-gray-400 pb-1 text-gray-900 transition hover:border-gray-600">
             <span class="text-sm font-medium">Author</span>
@@ -98,8 +98,8 @@ onMounted(async () => {
             </span>
           </summary>
           <div class="z-50 group-open:absolute group-open:start-0 group-open:top-auto group-open:mt-2">
-            <div class="w-96 rounded border border-gray-200 bg-white">
-              <ul class="space-y-1 border-t border-gray-200 p-4">
+            <div class="w-full rounded border border-gray-200 bg-white">
+              <ul class="space-y-1 border-t border-gray-200 p-2">
                 <li v-for="author in authorOptions" :key="author.author_name">
                   <label :for="`filter-author-${author.author_name}`" class="inline-flex items-center gap-2">
                     <input
@@ -119,7 +119,7 @@ onMounted(async () => {
       </div>
   
       <!-- Published Date Filter -->
-      <div class="relative">
+      <div class="mb-4">
         <details class="group [&_summary::-webkit-details-marker]:hidden">
           <summary class="flex cursor-pointer items-center gap-2 border-b border-gray-400 pb-1 text-gray-900 transition hover:border-gray-600">
             <span class="text-sm font-medium">Published Date</span>
@@ -130,8 +130,8 @@ onMounted(async () => {
             </span>
           </summary>
           <div class="z-50 group-open:absolute group-open:start-0 group-open:top-auto group-open:mt-2">
-            <div class="w-96 rounded border border-gray-200 bg-white">
-              <ul class="space-y-1 border-t border-gray-200 p-4">
+            <div class="w-full rounded border border-gray-200 bg-white">
+              <ul class="space-y-1 border-t border-gray-200 p-2">
                 <li v-for="date in publishedDateOptions" :key="date.published_date">
                   <label :for="`filter-date-${date.published_date}`" class="inline-flex items-center gap-2">
                     <input
@@ -151,7 +151,7 @@ onMounted(async () => {
       </div>
   
       <!-- Apply Filters Button -->
-      <button @click="applyFilters" class="ml-4 py-2 px-4 bg-blue-500 text-white rounded">Apply Filters</button>
+      <button @click="applyFilters" class="w-full py-2 px-4 bg-indigo-500 text-white rounded">Apply Filters</button>
     </div>
-  </template>
-    
+</template>
+      

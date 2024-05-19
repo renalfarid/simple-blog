@@ -52,11 +52,11 @@
     <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-lg">
         <h1 class="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">Get started today</h1>
+        <a class="text-indigo-600" href="/">
+              <span class="sr-only">Home</span>
+              <img class="mx-auto mt-4 max-w-md" src="/blog-logo.png" width="150" height="150" />
+        </a>
     
-        <p class="mx-auto mt-4 max-w-md text-center text-gray-500">
-          Please login to manage your blog
-        </p>
-
         <div v-if="isError" role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
             <strong class="block font-medium text-red-800"> Something went wrong </strong>
         
