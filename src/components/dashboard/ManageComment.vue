@@ -3,7 +3,7 @@
   import EditComment from '../ui/EditComment.vue'
   import useApiRequest from '../../composable/useApiRequest'
 
-  const { state, fetchUserComments, updateUserComments } = useApiRequest()
+  const { state, fetchUserComments, updateUserComments, deleteUserComments } = useApiRequest()
   const commentData = ref([])
   const showModal = ref(false)
   const selectedComment = ref(null)
@@ -15,12 +15,9 @@
   }
 
   const deleteComment = async (id) => {
-    console.log("delete comment: ", id)
-  }
-
-  const handleUpdateUserComment = async (id, payload) => {
-    await updateUserComments(id, payload)
-    console.log("state update: ", state.data.results)
+    await deleteUserComments(id)
+    getUserComments()
+    console.log("delete comment: ", state.data.results)
   }
 
   const updateComment = async (id) => {
