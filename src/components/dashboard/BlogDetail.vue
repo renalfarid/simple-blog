@@ -5,7 +5,7 @@ import useApiRequest from '../../composable/useApiRequest'
 import Comment from '../ui/Comment.vue';
 
 const route = useRoute()
-const { state, fetchSlugPost, fetchPostComment } = useApiRequest()
+const { state, fetchSlugPost, fetchPostComment, addLikeComment, addDislikeComment } = useApiRequest()
 const post = ref(null)
 const show = ref(false)
 const comments = ref([])
@@ -28,6 +28,20 @@ const getPosts = async () => {
 
 const showComment = () => {
   show.value = !show.value
+}
+
+const likeComment = async (id) => {
+  console.log("liked :", id)
+  await addLikeComment(id)
+  await getPosts()
+  console.log("state :", state.data)
+}
+
+const dislikeComment = async (id) => {
+  console.log("disliked :", id)
+  await addDislikeComment(id)
+  getPosts()
+  console.log("state :", state.data)
 }
 
 onMounted(() => {
@@ -59,6 +73,16 @@ onMounted(() => {
                     <p class="text-sm">
                     {{ comment.content }}
                     </p>
+                    <div class="flex items-center mt-2">
+                        <button class="mr-2" @click="likeComment(comment.id)">
+                         <i class="fas fa-thumbs-up"></i>
+                         <span>{{ comment.likes_count }}</span>
+                        </button>
+                        <button @click="dislikeComment(comment.id)">
+                            <i class="fas fa-thumbs-down"></i>
+                            <span>{{ comment.dislikes_count }}</span>
+                        </button>
+                    </div>
                 </div>
                 </div>
 

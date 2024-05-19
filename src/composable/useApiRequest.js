@@ -4,6 +4,8 @@ import useLocalStorage from './useLocalStorage'
 const { getLocalStorage } = useLocalStorage()
 
 const BASE_API_URL = import.meta.env.VITE_BASE_API_URL || 'https://blog.test/api'
+const LIKE_ENDPOINT = 'user/like/comments'
+const DISLIKE_ENDPOINT = 'user/dislike/comments'
 
 let dataToken = getLocalStorage("session")
 
@@ -301,6 +303,50 @@ export default function useApiRequest() {
     }
   }
 
+  const addLikeComment = async (id) => {
+    try {
+        const response = await fetch(`${BASE_API_URL}/${LIKE_ENDPOINT}/${id}`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${dataToken}`,
+              'Content-Type': 'application/json' 
+            },
+
+          })
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
+  const addDislikeComment = async (id) => {
+    try {
+        const response = await fetch(`${BASE_API_URL}/${DISLIKE_ENDPOINT}/${id}`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${dataToken}`,
+              'Content-Type': 'application/json' 
+            },
+
+          })
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
 
   return {
     state,
@@ -316,6 +362,8 @@ export default function useApiRequest() {
     addPostComment,
     updateUserPost,
     fetchFilterParams,
-    fetchFilterPosts
+    fetchFilterPosts,
+    addLikeComment,
+    addDislikeComment
   }
 }
