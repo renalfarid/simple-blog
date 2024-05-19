@@ -112,6 +112,20 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/dashboard/manage/comment',
+    component: () => import('@/layouts/default/Dashboard.vue'),
+    children: [
+      {
+        path: '/dashboard/manage/comment',
+        name: 'ManageComment',
+        component: () => import('@/views/ManageComment.vue'),
+        meta: {
+          requiresAuth: true 
+        }
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

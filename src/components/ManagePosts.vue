@@ -48,7 +48,7 @@ watch(() => data.value, (newVal) => {
         </div>
       </div>
 
-      <!-- Like, Comment, Edit and Delete Icons -->
+      
       <div class="mt-4 ml-10 flex items-center space-x-4">
         <a :href="`/dashboard/manage/update-post/${item.post_id}`" class="flex items-center text-gray-500 hover:text-gray-700">
           <i class="fas fa-edit"></i>

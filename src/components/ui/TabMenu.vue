@@ -38,6 +38,12 @@
           >
             Manage Posts
           </a>
+          <a
+            href="/dashboard/manage/comment"
+            class="shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+          >
+            Manage Comments
+          </a>
 
           <a href="#" @click.prevent="logout()"
             class="shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700">

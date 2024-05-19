@@ -347,6 +347,28 @@ export default function useApiRequest() {
     }
   }
 
+  const fetchUserComments = async () => {
+    state.loading = true
+    try {
+      const response = await fetch(`${BASE_API_URL}/user/comments`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${dataToken}`,
+            'Content-Type': 'application/json' 
+        }
+        })
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
 
   return {
     state,
@@ -364,6 +386,7 @@ export default function useApiRequest() {
     fetchFilterParams,
     fetchFilterPosts,
     addLikeComment,
-    addDislikeComment
+    addDislikeComment,
+    fetchUserComments
   }
 }
