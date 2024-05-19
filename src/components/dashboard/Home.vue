@@ -2,12 +2,12 @@
 import {onMounted, ref} from "vue"
 import useApiRequest from '../../composable/useApiRequest'
 
-const { state, fetchPosts, addLikePost, addDislikePost } = useApiRequest()
+const { state, fetchFilterPosts, addLikePost, addDislikePost } = useApiRequest()
 
 const data = ref([]); 
 
 const fetchBlogPost = async () => {
-  await fetchPosts();
+  await fetchFilterPosts();
   data.value = state.data.results;
 }
 
@@ -24,6 +24,7 @@ const dislikePost = async (id) => {
  onMounted(async() => {
   await fetchBlogPost();
 });
+
 </script>
 <template>
   <div class="m-10">

@@ -74,6 +74,58 @@ export default function useApiRequest() {
     }
   }
 
+  const fetchFilterParams = async (params) => {
+    state.loading = true;
+    
+    try {
+      const url = `${BASE_API_URL}/filter?params=${params}`;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      state.data = data;
+    } catch (error) {
+      state.error = error;
+    } finally {
+      state.loading = false;
+    }
+  }
+
+  const fetchFilterPosts = async (queryString) => {
+    state.loading = true;
+    
+    try {
+      const url = `${BASE_API_URL}/posts/filter?${queryString}`;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      state.data = data;
+    } catch (error) {
+      state.error = error;
+    } finally {
+      state.loading = false;
+    }
+  }  
+
   const fetchUserPosts = async () => {
     state.loading = true
     try {
@@ -262,6 +314,8 @@ export default function useApiRequest() {
     deleteUserPost,
     fetchPostComment,
     addPostComment,
-    updateUserPost
+    updateUserPost,
+    fetchFilterParams,
+    fetchFilterPosts
   }
 }
