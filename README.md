@@ -9,6 +9,8 @@ RESTful API and allows users to perform the following actions:
 - [x] Like and dislike blog posts
 - [x] Like and dislike blog comment
 
+- [x] Realtime search (inside dashboard)
+
 Notes : 
 - The frontend should be responsive and user-friendly, with appropriate form
 validations and error handling. Also, include appropriate authentication and
