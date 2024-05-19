@@ -19,8 +19,6 @@ Apps requirements :
 - Users can leave comments on blog posts.
 - Users can like and dislike blog posts and comments.
 
-This apps implement : 
-- composable API
 # Frontend Task
 
 Using Vue.js and Tailwind, create a frontend web application that consumes the
