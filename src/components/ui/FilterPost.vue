@@ -1,51 +1,55 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
-import useApiRequest from '../../composable/useApiRequest';
+import { ref, reactive, onMounted} from 'vue'
+import useApiRequest from '../../composable/useApiRequest'
+import { useFilterStore } from '../../stores/filterStore'
 
-const { state, fetchFilterParams, fetchFilterPosts } = useApiRequest();
+const { state, fetchFilterParams, fetchFilterPosts } = useApiRequest()
 
-const statusOptions = ref([]);
-const authorOptions = ref([]);
-const publishedDateOptions = ref([]);
+const filterStore = useFilterStore()
+
+const statusOptions = ref([])
+const authorOptions = ref([])
+const publishedDateOptions = ref([])
 
 const selectedFilters = reactive({
   statuses: [],
   authors: [],
   dates: [],
-});
+})
 
 const fetchFilterData = async (param, targetArray) => {
-  await fetchFilterParams(param);
-  targetArray.value = state.data.results;
-};
+  await fetchFilterParams(param)
+  targetArray.value = state.data.results
+}
 
 const applyFilters = async () => {
   // Construct the filter query parameters from the selected filters
-  const query = new URLSearchParams();
+  const query = new URLSearchParams()
 
   if (selectedFilters.statuses.length) {
-    query.append('status', selectedFilters.statuses.join(','));
+    query.append('status', selectedFilters.statuses.join(','))
   }
   if (selectedFilters.authors.length) {
-    query.append('author_id', selectedFilters.authors.join(','));
+    query.append('author_id', selectedFilters.authors.join(','))
   }
   if (selectedFilters.dates.length) {
-    query.append('published_date', selectedFilters.dates.join(','));
+    query.append('published_date', selectedFilters.dates.join(','))
   }
 
-  console.log("query :", query.toString());
+  console.log("query :", query.toString())
 
   // Fetch filtered data based on selected filters
-  await fetchFilterPosts(query.toString());
-  // Handle the fetched data as needed (e.g., update a list of posts)
-  console.log("state filter post: ", state.data)
-};
+  await fetchFilterPosts(query.toString())
+  filterStore.storeFilterData(state.data.results)
+  //console.log("data after filter", filterStore.filterData) 
+}
 
 onMounted(async () => {
-  await fetchFilterData('status', statusOptions);
-  await fetchFilterData('author_id', authorOptions);
-  await fetchFilterData('published_date', publishedDateOptions);
-});
+  await fetchFilterData('status', statusOptions)
+  await fetchFilterData('author_id', authorOptions)
+  await fetchFilterData('published_date', publishedDateOptions)
+})
+
 </script>
 
 <template>

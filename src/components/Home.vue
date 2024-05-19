@@ -1,14 +1,17 @@
 <script setup>
-import {onMounted, ref} from "vue"
+import {onMounted, ref, watch} from "vue"
 import useApiRequest from '../composable/useApiRequest'
+import FilterPost from './ui/FilterPost.vue'
+import { useFilterStore } from '../stores/filterStore'
 
-const { state, fetchPosts, addLikePost, addDislikePost } = useApiRequest()
+const { state, fetchFilterPosts, addLikePost, addDislikePost } = useApiRequest()
+const filterStore = useFilterStore()
 
 const data = ref([]); 
 
 const fetchBlogPost = async () => {
-  await fetchPosts();
-  data.value = state.data.results;
+  await filterStore.getFilterData()
+  data.value = filterStore.filterData;
 }
 
 const likePost = async (id) => {
@@ -19,15 +22,17 @@ const likePost = async (id) => {
 const dislikePost = async (id) => {
   await addDislikePost(id);
   await fetchBlogPost(); // Refresh posts to update dislike status
-};
+}
 
  onMounted(async() => {
   await fetchBlogPost();
-});
+})
+
 </script>
 <template>
   <div class="m-10">
-    <article v-for="(item, index) in data" :key="index" 
+    <FilterPost />
+    <article v-for="(item, index) in filterStore.filterData" :key="index" 
      class="mt-5 hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-200 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]">
       <div class="rounded-[10px] bg-white p-4 !pt-20 sm:p-6">
         <time datetime="2022-10-10" class="block text-xs text-gray-500"> {{ item.published_date }} </time>
@@ -42,7 +47,7 @@ const dislikePost = async (id) => {
           <span
             class="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-xs text-purple-600"
           >
-            {{ item.name }}
+            {{ item.author_name }}
           </span>
         </div>
       </div>
