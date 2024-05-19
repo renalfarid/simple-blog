@@ -369,6 +369,29 @@ export default function useApiRequest() {
     }
   }
 
+  const updateUserComments = async (id, payload) => {
+    state.loading = true
+    try {
+      const response = await fetch(`${BASE_API_URL}/user/comments/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${dataToken}`,
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(payload)
+        })
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`)
+      }
+      const data = await response.json()
+      state.data = data
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
 
   return {
     state,
@@ -387,6 +410,7 @@ export default function useApiRequest() {
     fetchFilterPosts,
     addLikeComment,
     addDislikeComment,
-    fetchUserComments
+    fetchUserComments,
+    updateUserComments
   }
 }

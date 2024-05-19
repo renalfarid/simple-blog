@@ -1,10 +1,12 @@
 <script setup>
   import { ref, onMounted } from 'vue'
+  import EditComment from '../ui/EditComment.vue'
   import useApiRequest from '../../composable/useApiRequest'
 
-  const { state, fetchUserComments } = useApiRequest()
-
+  const { state, fetchUserComments, updateUserComments } = useApiRequest()
   const commentData = ref([])
+  const showModal = ref(false)
+  const selectedComment = ref(null)
 
   const getUserComments = async () => {
     await fetchUserComments()
@@ -16,9 +18,35 @@
     console.log("delete comment: ", id)
   }
 
-  const updateComment = async (id) => {
-    console.log("update comment: ", id)
+  const handleUpdateUserComment = async (id, payload) => {
+    await updateUserComments(id, payload)
+    console.log("state update: ", state.data.results)
   }
+
+  const updateComment = async (id) => {
+    const comment = commentData.value.find(comment => comment.id === id)
+    selectedComment.value = { ...comment }
+    showModal.value = true
+  }
+
+  const closeEditModal = () => {
+    showModal.value = false
+  }
+
+  const saveEditedComment = async (updatedComment) => {
+  // Update the commentData with the updated comment
+  const index = commentData.value.findIndex(comment => comment.id === updatedComment.id)
+  if (index !== -1) {
+    commentData.value[index] = updatedComment
+  }
+  const commentId = updatedComment.id
+  const payload = {"content": updatedComment.content}
+  
+  showModal.value = false
+  await updateUserComments(commentId, payload)
+
+}
+
 
   onMounted(() => {
     getUserComments()
@@ -53,5 +81,12 @@
   
   </article>
   </div> 
+
+  <EditComment 
+    :show="showModal" 
+    :comment="selectedComment" 
+    @close="closeEditModal" 
+    @save="saveEditedComment" 
+  />
   
 </template>
