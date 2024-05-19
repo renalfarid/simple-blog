@@ -4,7 +4,7 @@ import useApiRequest from '../composable/useApiRequest'
 import FilterPost from './ui/FilterPost.vue'
 import { useFilterStore } from '../stores/filterStore'
 
-const { state, fetchFilterPosts, addLikePost, addDislikePost } = useApiRequest()
+const { addLikePost, addDislikePost } = useApiRequest()
 const filterStore = useFilterStore()
 
 const data = ref([]); 

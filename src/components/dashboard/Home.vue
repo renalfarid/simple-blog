@@ -1,14 +1,15 @@
 <script setup>
-import {onMounted, ref} from "vue"
+import {onMounted, ref, computed} from "vue"
 import useApiRequest from '../../composable/useApiRequest'
 
 const { state, fetchFilterPosts, addLikePost, addDislikePost } = useApiRequest()
 
-const data = ref([]); 
+const data = ref([])
+const searchQuery = ref('')
 
 const fetchBlogPost = async () => {
-  await fetchFilterPosts();
-  data.value = state.data.results;
+  await fetchFilterPosts()
+  data.value = state.data.results
 }
 
 const likePost = async (id) => {
@@ -19,16 +20,30 @@ const likePost = async (id) => {
 const dislikePost = async (id) => {
   await addDislikePost(id);
   await fetchBlogPost(); // Refresh posts to update dislike status
-};
+}
 
  onMounted(async() => {
   await fetchBlogPost();
-});
+})
+
+const filteredPosts = computed(() => {
+  if (!searchQuery.value) {
+    return data.value;
+  }
+  return data.value.filter((post) =>
+    post.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    post.content.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+})
 
 </script>
 <template>
   <div class="m-10">
-    <article v-for="(item, index) in data" :key="index" 
+    <input v-model="searchQuery" type="text"
+      placeholder="Search by title or content"
+      class="mb-5 p-2 border rounded"
+    />
+    <article v-for="(item, index) in filteredPosts" :key="index" 
      class="mt-5 hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-200 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]">
       <div class="rounded-[10px] bg-white p-4 !pt-20 sm:p-6">
         <time datetime="2022-10-10" class="block text-xs text-gray-500"> {{ item.published_date }} </time>
