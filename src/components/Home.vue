@@ -53,7 +53,7 @@ const dislikePost = async (id) => {
       </div>
       <!-- Like and Comment Icons -->
       <div class="mt-4 ml-10 flex items-center space-x-4">
-          <button @click="likePost(item.id)"
+          <!--<button @click="likePost(item.id)"
           :class="{'text-red-500': item.is_like, 'text-gray-500 hover:text-gray-700': !item.is_like}"  
            class="flex items-center text-gray-500 hover:text-gray-700">
             <i class="fas fa-thumbs-up"></i>
@@ -64,7 +64,9 @@ const dislikePost = async (id) => {
             class="flex items-center text-gray-500 hover:text-gray-700">
             <i class="fas fa-thumbs-down"></i>
             <span class="ml-1">Dislike</span>
-          </button>
+          </button> -->
+          <span>Likes : {{ item.likes_count }}</span>
+          <span>Dislikes : {{ item.dislikes_count }}</span>
           <span>Comments : {{ item.comment_count }}</span>
         </div>
   </article>
