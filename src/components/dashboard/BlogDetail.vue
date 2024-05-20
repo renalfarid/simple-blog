@@ -86,6 +86,17 @@ onMounted(() => {
                 <span class="text-xs text-gray-400">{{ comment.created_at }}</span>
               </div>
               <p class="text-sm">{{ comment.content }}</p>
+              <div class="flex items-center mt-2">
+                        <button class="mr-2" @click="likeComment(comment.id)">
+                         <i class="fas fa-thumbs-up"></i>
+                         <span>{{ comment.likes_count }}</span>
+                        </button>
+                        <button @click="dislikeComment(comment.id)">
+                            <i class="fas fa-thumbs-down"></i>
+                            <span>{{ comment.dislikes_count }}</span>
+                        </button>
+                    </div>
+
             </div>
           </div>
         </div>
